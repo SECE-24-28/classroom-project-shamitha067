@@ -1,0 +1,97 @@
+.grid{
+    display:grid;
+    margin:100px;
+    grid-template-columns: repeat(6,50px);
+    grid-template-rows: repeat(4,50px);
+}
+
+.item1{
+    background-color:red;
+}
+.item2{
+    background-color: purple;
+}
+.item3{
+  background-color:aqua;
+}
+.item4{
+  background-color:white;
+}
+.item5{
+  background-color:rgb(201, 61, 61);
+}
+.item6{
+  background-color:rgb(52, 236, 52);
+}
+.item7{
+  background-color:rgba(4, 4, 252, 0.986);
+}
+.item8{
+  background-color:pink;
+}
+.item9{
+  background-color:rgb(227, 164, 46);
+}
+.item10{
+  background-color:brown;
+}
+.item11{
+  background-color:rgb(104, 103, 103);
+}
+.item12{
+  background-color:cyan;
+}
+.item13{
+  background-color:rgb(98, 188, 98);
+}
+.item14{
+  background-color:rgb(153, 221, 16);
+}
+.item15{
+  background-color:rgb(20, 20, 93);
+}
+.item16{
+  background-color:rgb(4, 110, 110);
+}
+.item17{
+  background-color:rgb(216, 95, 95);
+}
+.item18{
+  background-color:rgb(75, 75, 0);
+}
+.item19{
+  background-color:gold;
+}
+.item20{
+  background-color:rgb(196, 196, 196);
+}
+.item21{
+  background-color:coral;
+}
+.item22{
+  background-color:rgb(58, 0, 100);
+}
+.item23{
+  background-color:salmon;
+}
+.item24{
+  background-color:plum;
+}
+.item25{
+    background-color:khaki;
+}
+.item26{
+    background-color:orchid;
+}
+.item27{
+    background-color:peru;
+}
+.item28{
+    background-color:rgb(109, 243, 243);
+}
+.item29{
+    background-color:ivory;
+}
+.item30{
+    background-color:rgb(196, 196, 244);
+}
