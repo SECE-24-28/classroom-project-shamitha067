@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Glimmer Cart</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <h2>🎄 Glimmer Cart</h2>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#offers">Christmas Offers</a></li>
+      <li><a href="#cart">Cart</a></li> ✅ <!-- ONLY ADDED THIS -->
+    </ul>
+  </nav>
+
+  <!-- HOME -->
+  <section id="home" class="section">
+    <h1>Trending Christmas Deals</h1>
+
+    <div class="container">
+      <div class="products">
+
+        <!-- ✅ YOUR PRODUCTS (UNCHANGED) -->
+        <div class="product"><img src="tshirt.jpeg"><h3>T-Shirt</h3><p>₹500</p><button onclick="addToCart('T-Shirt',500)">Add</button></div>
+        <div class="product"><img src="shoe.jpeg"><h3>Shoes</h3><p>₹1200</p><button onclick="addToCart('Shoes',1200)">Add</button></div>
+        <div class="product"><img src="watch.jpeg"><h3>Watch</h3><p>₹1500</p><button onclick="addToCart('Watch',1500)">Add</button></div>
+        <div class="product"><img src="bag.jpeg"><h3>Bag</h3><p>₹900</p><button onclick="addToCart('Bag',900)">Add</button></div>
+
+        <div class="product"><img src="cap.jpeg"><h3>Cap</h3><p>₹300</p><button onclick="addToCart('Cap',300)">Add</button></div>
+        <div class="product"><img src="perfume.jpeg"><h3>Perfume</h3><p>₹800</p><button onclick="addToCart('Perfume',800)">Add</button></div>
+        <div class="product"><img src="wallet.jpeg"><h3>Wallet</h3><p>₹400</p><button onclick="addToCart('Wallet',400)">Add</button></div>
+        <div class="product"><img src="sunglass.jpeg"><h3>Sunglasses</h3><p>₹700</p><button onclick="addToCart('Sunglasses',700)">Add</button></div>
+
+        <div class="product"><img src="mobile.jpeg"><h3>Mobile</h3><p>₹56000</p><button onclick="addToCart('Mobile',56000)">Add</button></div>
+        <div class="product"><img src="headphones.jpeg"><h3>Headphones</h3><p>₹2000</p><button onclick="addToCart('Headphones',2000)">Add</button></div>
+        <div class="product"><img src="lap.jpeg"><h3>Laptop</h3><p>₹45000</p><button onclick="addToCart('Laptop',45000)">Add</button></div>
+        <div class="product"><img src="maxi.webp"><h3>Maxi</h3><p>₹1500</p><button onclick="addToCart('Maxi',1500)">Add</button></div>
+
+        <div class="product"><img src="dresss.jpeg"><h3>Dress</h3><p>₹1200</p><button onclick="addToCart('Dress',1200)">Add</button></div>
+        <div class="product"><img src="tripod.jpeg"><h3>Tripod</h3><p>₹900</p><button onclick="addToCart('Tripod',900)">Add</button></div>
+
+      </div>
+    </div>
+  </section>
+
+  <!--  CART SECTION (JUST LIKE ABOUT & OFFERS) -->
+  <section id="cart" class="section about">
+    <h1>🛒 Your Cart</h1>
+    <ul id="cartList"></ul>
+    <h3>Total: ₹<span id="total">0</span></h3>
+  </section>
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+  <!-- ABOUT -->
+ <section id="about" class="section about">
+  <h1>About Glimmer Cart</h1>
+
+  <p>
+    <strong>Glimmer Cart</strong> is a modern online shopping destination designed to bring you the best 
+    festive shopping experience with style, speed, and savings. We specialize in delivering 
+    trending fashion, smart gadgets, accessories, and Christmas gift essentials — all in one place.
+  </p>
+
+  <p>
+    Founded with the vision of making online shopping joyful and affordable, Glimmer Cart focuses on 
+    quality products, smooth user experience, and exciting seasonal discounts. Our Christmas collection 
+    is carefully curated to match the holiday spirit with vibrant styles and unbeatable offers.
+  </p>
+
+  <p>
+    At Glimmer Cart, we believe shopping should be:
+  </p>
+
+  <ul style="list-style: none; padding: 0; font-size: 18px;">
+    <li>✅ Simple & Secure</li>
+    <li>✅ Fast & Reliable</li>
+    <li>✅ Trendy & Affordable</li>
+    <li>✅ Customer-First Always</li>
+  </ul>
+
+  <p>
+    Whether you're buying for yourself or searching for the perfect Christmas gift for your loved ones, 
+    Glimmer Cart is your trusted festive shopping partner.
+  </p>
+
+  <h3 style="margin-top: 25px;">🎄 Shop Smart. Shop Festive. Shop Glimmer.</h3>
+</section>
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+ 
+
+  <!-- OFFERS -->
+  <section id="offers" class="section offers">
+    <h1>🎄 Christmas Mega Offers</h1>
+
+    <div class="offer-grid">
+      <div>🎁 FLAT 50% OFF on Clothing</div>
+      <div>🎧 30% OFF on Electronics</div>
+      <div>🎄 Buy 2 Get 1 Free</div>
+      <div>⚡ Extra ₹500 OFF above ₹4999</div>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
