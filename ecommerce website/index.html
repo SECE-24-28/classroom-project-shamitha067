@@ -1,111 +1,159 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Glimmer Cart</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+let total = 0;
+let cartList = document.getElementById("cartList");
+let totalDisplay = document.getElementById("total");
+let currentUser = null;
 
-  <!-- NAVIGATION -->
-  <nav>
-    <h2>🎄 Glimmer Cart</h2>
-    <ul>
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#offers">Christmas Offers</a></li>
-      <li><a href="#cart">Cart</a></li> ✅ <!-- ONLY ADDED THIS -->
-    </ul>
-  </nav>
+// Load user from localStorage on page load
+window.onload = function() {
+  const savedUser = localStorage.getItem("currentUser");
+  if (savedUser) {
+    currentUser = JSON.parse(savedUser);
+    updateNavForUser();
+  }
+};
 
-  <!-- HOME -->
-  <section id="home" class="section">
-    <h1>Trending Christmas Deals</h1>
+// ============ ADD TO CART (UNCHANGED + TOAST) ============
+function addToCart(name, price) {
+  let li = document.createElement("li");
 
-    <div class="container">
-      <div class="products">
+  let itemText = document.createElement("span");
+  itemText.innerText = `${name} - ₹${price}`;
 
-        <!-- ✅ YOUR PRODUCTS (UNCHANGED) -->
-        <div class="product"><img src="tshirt.jpeg"><h3>T-Shirt</h3><p>₹500</p><button onclick="addToCart('T-Shirt',500)">Add</button></div>
-        <div class="product"><img src="shoe.jpeg"><h3>Shoes</h3><p>₹1200</p><button onclick="addToCart('Shoes',1200)">Add</button></div>
-        <div class="product"><img src="watch.jpeg"><h3>Watch</h3><p>₹1500</p><button onclick="addToCart('Watch',1500)">Add</button></div>
-        <div class="product"><img src="bag.jpeg"><h3>Bag</h3><p>₹900</p><button onclick="addToCart('Bag',900)">Add</button></div>
+  let removeBtn = document.createElement("button");
+  removeBtn.innerText = "Remove";
+  removeBtn.style.cssText = "background:crimson;color:white;border:none;padding:6px 12px;border-radius:6px;cursor:pointer;margin-left:15px;";
 
-        <div class="product"><img src="cap.jpeg"><h3>Cap</h3><p>₹300</p><button onclick="addToCart('Cap',300)">Add</button></div>
-        <div class="product"><img src="perfume.jpeg"><h3>Perfume</h3><p>₹800</p><button onclick="addToCart('Perfume',800)">Add</button></div>
-        <div class="product"><img src="wallet.jpeg"><h3>Wallet</h3><p>₹400</p><button onclick="addToCart('Wallet',400)">Add</button></div>
-        <div class="product"><img src="sunglass.jpeg"><h3>Sunglasses</h3><p>₹700</p><button onclick="addToCart('Sunglasses',700)">Add</button></div>
+  removeBtn.onclick = function () {
+    cartList.removeChild(li);
+    total -= price;
+    totalDisplay.textContent = total;
+  };
 
-        <div class="product"><img src="mobile.jpeg"><h3>Mobile</h3><p>₹56000</p><button onclick="addToCart('Mobile',56000)">Add</button></div>
-        <div class="product"><img src="headphones.jpeg"><h3>Headphones</h3><p>₹2000</p><button onclick="addToCart('Headphones',2000)">Add</button></div>
-        <div class="product"><img src="lap.jpeg"><h3>Laptop</h3><p>₹45000</p><button onclick="addToCart('Laptop',45000)">Add</button></div>
-        <div class="product"><img src="maxi.webp"><h3>Maxi</h3><p>₹1500</p><button onclick="addToCart('Maxi',1500)">Add</button></div>
+  li.appendChild(itemText);
+  li.appendChild(removeBtn);
+  cartList.appendChild(li);
 
-        <div class="product"><img src="dresss.jpeg"><h3>Dress</h3><p>₹1200</p><button onclick="addToCart('Dress',1200)">Add</button></div>
-        <div class="product"><img src="tripod.jpeg"><h3>Tripod</h3><p>₹900</p><button onclick="addToCart('Tripod',900)">Add</button></div>
+  total += price;
+  totalDisplay.textContent = total;
 
-      </div>
-    </div>
-  </section>
+  showToast(`${name} added to cart! 🛒`);
+}
 
-  <!--  CART SECTION (JUST LIKE ABOUT & OFFERS) -->
-  <section id="cart" class="section about">
-    <h1>🛒 Your Cart</h1>
-    <ul id="cartList"></ul>
-    <h3>Total: ₹<span id="total">0</span></h3>
-  </section>
-  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+// ============ TOAST ============
+function showToast(message) {
+  const existingToast = document.querySelector(".toast");
+  if (existingToast) existingToast.remove();
 
-  <!-- ABOUT -->
- <section id="about" class="section about">
-  <h1>About Glimmer Cart</h1>
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.textContent = message;
+  document.body.appendChild(toast);
 
-  <p>
-    <strong>Glimmer Cart</strong> is a modern online shopping destination designed to bring you the best 
-    festive shopping experience with style, speed, and savings. We specialize in delivering 
-    trending fashion, smart gadgets, accessories, and Christmas gift essentials — all in one place.
-  </p>
+  toast.offsetHeight; // trigger reflow
+  toast.classList.add("show");
 
-  <p>
-    Founded with the vision of making online shopping joyful and affordable, Glimmer Cart focuses on 
-    quality products, smooth user experience, and exciting seasonal discounts. Our Christmas collection 
-    is carefully curated to match the holiday spirit with vibrant styles and unbeatable offers.
-  </p>
+  setTimeout(() => {
+    toast.classList.remove("show");
+    toast.classList.add("hide");
+    toast.addEventListener("transitionend", () => toast.remove(), { once: true });
+  }, 2000);
+}
 
-  <p>
-    At Glimmer Cart, we believe shopping should be:
-  </p>
+// ============ AUTH FUNCTIONS ============
+function openAuthModal(mode = 'login') {
+  const modal = document.getElementById("authModal");
+  const title = document.getElementById("modalTitle");
+  const nameField = document.getElementById("signupNameField");
+  const button = document.getElementById("authButton");
+  const toggleText = document.getElementById("toggleText");
 
-  <ul style="list-style: none; padding: 0; font-size: 18px;">
-    <li>✅ Simple & Secure</li>
-    <li>✅ Fast & Reliable</li>
-    <li>✅ Trendy & Affordable</li>
-    <li>✅ Customer-First Always</li>
-  </ul>
+  if (mode === 'signup') {
+    title.textContent = "Create Account";
+    nameField.style.display = "block";
+    button.textContent = "Sign Up";
+    toggleText.innerHTML = 'Already have an account? <a href="#" onclick="openAuthModal(\'login\')">Login</a>';
+  } else {
+    title.textContent = "Login to Glimmer Cart";
+    nameField.style.display = "none";
+    button.textContent = "Login";
+    toggleText.innerHTML = 'Don\'t have an account? <a href="#" onclick="openAuthModal(\'signup\')">Sign up</a>';
+  }
 
-  <p>
-    Whether you're buying for yourself or searching for the perfect Christmas gift for your loved ones, 
-    Glimmer Cart is your trusted festive shopping partner.
-  </p>
+  document.getElementById("authForm").dataset.mode = mode;
+  modal.style.display = "flex";
+}
 
-  <h3 style="margin-top: 25px;">🎄 Shop Smart. Shop Festive. Shop Glimmer.</h3>
-</section>
+function closeAuthModal() {
+  document.getElementById("authModal").style.display = "none";
+}
 
-  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
- 
+// Close modal when clicking outside
+window.onclick = function(e) {
+  const modal = document.getElementById("authModal");
+  if (e.target === modal) closeAuthModal();
+};
 
-  <!-- OFFERS -->
-  <section id="offers" class="section offers">
-    <h1>🎄 Christmas Mega Offers</h1>
+// Handle Login / Sign Up
+document.getElementById("authForm").onsubmit = function(e) {
+  e.preventDefault();
 
-    <div class="offer-grid">
-      <div>🎁 FLAT 50% OFF on Clothing</div>
-      <div>🎧 30% OFF on Electronics</div>
-      <div>🎄 Buy 2 Get 1 Free</div>
-      <div>⚡ Extra ₹500 OFF above ₹4999</div>
-    </div>
-  </section>
+  const email = document.getElementById("authEmail").value.trim();
+  const password = document.getElementById("authPassword").value;
+  const mode = this.dataset.mode;
 
-  <script src="script.js"></script>
-</body>
-</html>
+  if (mode === "signup") {
+    const name = document.getElementById("signupName").value.trim();
+    if (!name) return showToast("Name is required!");
+
+    // Save user
+    const users = JSON.parse(localStorage.getItem("users") || "{}");
+    if (users[email]) {
+      showToast("Email already registered!");
+      return;
+    }
+    users[email] = { name, password }; // In real app: hash password!
+    localStorage.setItem("users", JSON.stringify(users));
+
+    showToast("Account created successfully! 🎉");
+  }
+
+  // Login logic (common for both)
+  const users = JSON.parse(localStorage.getItem("users") || "{}");
+  if (!users[email] || users[email].password !== password) {
+    showToast("Invalid email or password!");
+    return;
+  }
+
+  // Successful login
+  currentUser = { email, name: users[email].name };
+  localStorage.setItem("currentUser", JSON.stringify(currentUser));
+
+  updateNavForUser();
+  closeAuthModal();
+  showToast(`Welcome back, ${currentUser.name}! 🎄`);
+};
+
+// Update navigation when logged in
+function updateNavForUser() {
+  const userSection = document.getElementById("userSection");
+  if (currentUser) {
+    userSection.innerHTML = `
+      <span>Welcome, <strong>${currentUser.name.split(" ")[0]}</strong>!</span>
+      <button onclick="logout()" style="padding:8px 16px;background:#c2185b;color:white;border:none;border-radius:6px;cursor:pointer;">Logout</button>
+    `;
+  } else {
+    userSection.innerHTML = `
+      <a href="#" onclick="openAuthModal('login')">Login</a>
+      <span>|</span>
+      <a href="#" onclick="openAuthModal('signup')">Sign Up</a>
+    `;
+  }
+}
+
+// Logout
+function logout() {
+  currentUser = null;
+  localStorage.removeItem("currentUser");
+  updateNavForUser();
+  showToast("Logged out successfully!");
+}
